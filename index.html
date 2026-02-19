@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vitvisor | Proyectos</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Inter', sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+/* HERO */
+.hero{
+    height:400px;
+    background:url('https://i.postimg.cc/YSBZf5v2/image.png') center/cover no-repeat;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.6);
+}
+
+.hero h1{
+    position:relative;
+    font-size:3rem;
+    font-weight:800;
+}
+
+/* GRID */
+.container{
+    padding:60px 5%;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:30px;
+}
+
+.card{
+    background:#1e293b;
+    border-radius:12px;
+    overflow:hidden;
+    cursor:pointer;
+    transition:0.4s;
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card img{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:20px;
+}
+
+button{
+    padding:8px 15px;
+    background:#00d084;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:600;
+}
+
+/* MODAL */
+dialog{
+    width:600px;
+    max-width:95%;
+    border:none;
+    border-radius:12px;
+    padding:25px;
+    background:#1e293b;
+}
+
+dialog::backdrop{
+    background:rgba(0,0,0,0.7);
+}
+
+dialog img, video, iframe{
+    width:100%;
+    margin:15px 0;
+    border-radius:8px;
+}
+
+.close-btn{
+    float:right;
+    background:red;
+    color:white;
+    border:none;
+    padding:6px 10px;
+    border-radius:6px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<section class="hero">
+    <h1>Vitvisor Templates</h1>
+</section>
+
+<section class="container">
+
+    <div class="card">
+        <img src="https://i.postimg.cc/RhbChTfW/portada.png">
+        <div class="card-content">
+            <h3>Plantilla Base</h3>
+            <button onclick="abrirProyecto(
+                'Plantilla Base',
+                'https://i.postimg.cc/RhbChTfW/portada.png',
+                'Documento editable profesional.',
+                'https://drive.google.com/',
+                null
+            )">Ver</button>
+        </div>
+    </div>
+    <div class="card">
+        <img src="https://i.postimg.cc/RhbChTfW/portada.png">
+        <div class="card-content">
+            <h3>Plantilla Base</h3>
+            <button onclick="abrirProyecto(
+                'Plantilla Base',
+                'https://i.postimg.cc/RhbChTfW/portada.png',
+                'Documento editable profesional.',
+                'https://drive.google.com/',
+                null
+            )">Ver</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="https://i.postimg.cc/xjk1pwS3/bienvenida.png">
+        <div class="card-content">
+            <h3>Plantilla Multimedia</h3>
+            <button onclick="abrirProyecto(
+                'Plantilla Multimedia',
+                'https://i.postimg.cc/xjk1pwS3/bienvenida.png',
+                'Incluye soporte audiovisual.',
+                'https://drive.google.com/',
+                'https://www.youtube.com/watch?v=NTwKEBr8Fx4'
+            )">Ver</button>
+        </div>
+    </div>
+
+</section>
+
+<dialog id="modal">
+    <button class="close-btn" onclick="cerrarModal()">✖</button>
+    <h2 id="titulo"></h2>
+
+    <img id="imagen">
+    <video id="video" controls style="display:none;"></video>
+    <iframe id="youtube" style="display:none; height:350px;" frameborder="0" allowfullscreen></iframe>
+
+    <p id="descripcion"></p>
+    <a id="descarga" target="_blank" style="color:#00ffae;">Descargar</a>
+</dialog>
+
+<script>
+function abrirProyecto(titulo, imagen, descripcion, enlace, media){
+
+    document.getElementById("titulo").innerText = titulo;
+    document.getElementById("imagen").src = imagen;
+    document.getElementById("descripcion").innerText = descripcion;
+    document.getElementById("descarga").href = enlace;
+
+    const video = document.getElementById("video");
+    const youtube = document.getElementById("youtube");
+
+    video.style.display = "none";
+    youtube.style.display = "none";
+    video.src = "";
+    youtube.src = "";
+
+    if(media){
+        if(media.includes("youtube")){
+            const id = media.split("v=")[1];
+            youtube.src = "https://www.youtube.com/embed/" + id;
+            youtube.style.display = "block";
+        } else {
+            video.src = media;
+            video.style.display = "block";
+        }
+    }
+
+    document.getElementById("modal").showModal();
+}
+
+function cerrarModal(){
+    document.getElementById("modal").close();
+    document.getElementById("video").src = "";
+    document.getElementById("youtube").src = "";
+}
+</script>
+
+</body>
+</html>
